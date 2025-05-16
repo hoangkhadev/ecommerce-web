@@ -4,6 +4,7 @@ import Info from '@/components/home/info'
 import AdvancedHeadline from '@/components/advanced-headline'
 import HeadingListProducts from '@/components/home/heading-list-products'
 import SaleHomePage from '@/components/home/sale-home-page'
+import Footer from '@/components/footer'
 
 export default function App() {
   return (
@@ -16,11 +17,7 @@ export default function App() {
       <AdvancedHeadline title="Don't miss super offers" subTitle='Our best products' />
       <HeadingListProducts />
       <SaleHomePage />
-      <div
-        style={{
-          height: '200px',
-        }}
-      ></div>
+      <Footer />
     </>
   )
 }
