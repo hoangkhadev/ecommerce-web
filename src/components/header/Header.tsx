@@ -11,7 +11,7 @@ import { dataBoxIcon, dataMenu } from '@/components/header/constants'
 
 export default function Header() {
   return (
-    <header>
+    <header className='absolute top-0 left-0 right-0 z-[1000]'>
       <nav className='wrapper flex items-center justify-between py-[10px]'>
         {/* Header Left */}
         <div>
@@ -52,7 +52,7 @@ export default function Header() {
             <div className='hidden lg:block cursor-pointer'>
               <img src={heartIcon} alt='heartIcon' />
             </div>
-            <div className='relative cursor-pointer'>
+            <div className='relative cursor-pointer mr-3'>
               <img src={cartIcon} alt='cartIcon' />
               <span className='absolute -top-[3px] -right-[11px] h-[18px] w-[18px] bg-primary text-white text-[11px] flex-center rounded-full'>
                 0

@@ -4,11 +4,22 @@
 /* TailwindCSS */
 @import 'tailwindcss';
 
+/* Root */
+:root {
+  --color-primary: #333;
+  --color-secondary: #888;
+  --color-thr: #555;
+  --color-four: #222;
+  --color-white: #fff;
+  --color-sub: #404040;
+}
+
 /* Theme */
 @theme {
   --color-primary: #333;
   --color-secondary: #888;
   --color-thr: #555;
+  --color-four: #222;
   --color-white: #fff;
   --color-sub: #404040;
 
@@ -32,6 +43,7 @@
     @apply flex justify-center items-center gap-0;
   }
 
+  /* Begin Header */
   .menu-item {
     @apply relative py-[8px] cursor-pointer;
   }
@@ -52,10 +64,60 @@
     height: 3px;
     width: 100%;
     border-radius: 20px;
-    background-color: #333;
+    background-color: var(--color-primary);
 
     opacity: 0;
     transform: scale(0);
     transform-origin: right;
+  }
+
+  /* End Header */
+
+  /* Begin Banner */
+  .banner {
+    background-color: #e9e6e3;
+
+    background-image: url('./assets/images/banner.jpeg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  /* End Banner */
+
+  .btn {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid var(--color-primary);
+    border-radius: 3px;
+    padding: 12px 24px;
+    background-color: var(--color-thr);
+    cursor: pointer;
+    line-height: 1;
+    text-align: center;
+
+    transition:
+      background-color 300ms,
+      color 300ms;
+  }
+
+  .btn-primary {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: transparent;
+      color: var(--color-primary);
+    }
+  }
+
+  .btn-outline {
+    color: var(--color-primary);
+    background-color: transparent;
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+    }
   }
 }
