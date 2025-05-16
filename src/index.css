@@ -46,31 +46,30 @@
   /* Begin Header */
   .menu-item {
     @apply relative py-[8px] cursor-pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      border-radius: 20px;
+      background-color: var(--color-primary);
+
+      opacity: 0;
+      transform: scale(0);
+      transform-origin: right;
+    }
+
+    &:hover::after {
+      opacity: 1;
+      transform: scale(1);
+      transition:
+        transform 300ms,
+        opacity 300ms;
+    }
   }
-
-  .menu-item:hover::after {
-    opacity: 1;
-    transform: scale(1);
-    transition:
-      transform 300ms,
-      opacity 300ms;
-  }
-
-  .menu-item::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    border-radius: 20px;
-    background-color: var(--color-primary);
-
-    opacity: 0;
-    transform: scale(0);
-    transform-origin: right;
-  }
-
   /* End Header */
 
   /* Begin Banner */
@@ -119,5 +118,44 @@
       background-color: var(--color-primary);
       color: var(--color-white);
     }
+  }
+
+  .advanced-headline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: var(--color-primary);
+    line-height: 32px;
+    margin-bottom: 10px;
+
+    &::before {
+      @apply hidden md:flex;
+
+      content: '';
+      border-bottom: 4px double #e1e1e1;
+      flex: 1;
+      margin-right: 60px;
+    }
+
+    &::after {
+      @apply hidden md:flex;
+
+      content: '';
+      border-bottom: 4px double #e1e1e1;
+      flex: 1;
+      margin-left: 60px;
+    }
+  }
+
+  .countdown-banner {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+
+    background-image: url('./assets/images/countdown-banner.jpeg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
