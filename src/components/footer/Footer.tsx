@@ -2,6 +2,7 @@ import logo from '@/assets/images/logo-footer.webp'
 import payment from '@/assets/images/payment.webp'
 
 import { dataMenuFooter } from '@/components/footer/constants'
+import { Link } from 'react-router'
 
 export default function Footer() {
   return (
@@ -17,7 +18,7 @@ export default function Footer() {
               key={`menu-footer-${index}`}
               className='text-white hover:text-[#cccccc] text-[15px] leading-[20px] font-[400] capitalize transition-colors duration-300  cursor-pointer'
             >
-              {item.content}
+              {item.href ? <Link to={item.href}>{item.content}</Link> : <span>{item.content}</span>}
             </li>
           ))}
         </ul>

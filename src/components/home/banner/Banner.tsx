@@ -2,7 +2,7 @@ import Button from '@/components/button'
 
 export default function Banner() {
   return (
-    <section className='banner flex-center min-h-[600px] lg:min-h-[750px]'>
+    <section className='relative banner flex-center min-h-[600px] lg:min-h-[750px]'>
       <div className='text-center z-[10]'>
         <h1 className='text-[42px] text-four font-[400] capitalize leading-[52px]  mb-[20px]'>
           XStore Marseille04 Demo
