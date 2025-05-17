@@ -1,5 +1,6 @@
 import Footer from '@/components/footer'
 import Header from '@/components/header'
+import Sidebar from '@/components/sidebar'
 
 import { Outlet } from 'react-router'
 
@@ -13,6 +14,7 @@ export default function MainLayout() {
         </main>
       </div>
       <Footer />
+      <Sidebar />
     </div>
   )
 }

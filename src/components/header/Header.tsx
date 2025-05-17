@@ -11,10 +11,19 @@ import { dataBoxIcon, dataMenu } from '@/components/header/constants'
 import { Link } from 'react-router'
 import useScrollHandling from '@/hooks/useScrollHandling'
 import { useEffect, useState } from 'react'
+import useSidebar from '@/hooks/useSidebar'
+import SidebarType from '@/types/sidebar'
 
 export default function Header() {
+  const { setIsOpen, setType } = useSidebar()
   const { scrollPosition } = useScrollHandling()
   const [fixedPostion, setFixedPosition] = useState(false)
+
+  const handleOpenSidebar = (type: SidebarType) => {
+    setIsOpen(true)
+    setType(type)
+    console.log('Click cart')
+  }
 
   useEffect(() => {
     setFixedPosition(scrollPosition >= 60)
@@ -22,7 +31,7 @@ export default function Header() {
 
   return (
     <header
-      className={`${fixedPostion ? 'fixed -top-[81px] transform translate-y-[81px] bg-[#FFFFFFE6] shadow-xs shadow-black/15 backdrop-blur-xs transition-transform duration-500 ease-linear' : 'absolute top-0 bg-transparent'} left-0 right-0 z-[1000]`}
+      className={`header ${fixedPostion ? 'fixed -top-[81px] transform translate-y-[81px] bg-[#FFFFFFE6] shadow-xs shadow-black/15 backdrop-blur-xs transition-transform duration-500 ease-linear' : 'absolute top-0 bg-transparent'} left-0 right-0`}
     >
       <nav className='wrapper flex items-center justify-between py-[14px]'>
         {/* Header Left */}
@@ -43,6 +52,7 @@ export default function Header() {
                   content={item.content}
                   href={item.href}
                   isLink={item.href !== undefined}
+                  setIsOpen={setIsOpen}
                 />
               ))}
             </div>
@@ -63,20 +73,27 @@ export default function Header() {
                 content={item.content}
                 href={item.href}
                 isLink={item.href !== undefined}
+                setIsOpen={setIsOpen}
               />
             ))}
           </div>
 
           <div className='flex-center gap-[20px]'>
-            <div className='hidden lg:block cursor-pointer'>
+            <div className='relative hidden lg:block cursor-pointer' onClick={() => handleOpenSidebar('compare')}>
               <img src={reloadIcon} alt='reloadIcon' />
+              <span className='absolute -top-[3px] -right-[8px] h-[16px] py-[4px] px-[5px]  bg-primary text-white text-[11px] flex-center rounded-full'>
+                0
+              </span>
             </div>
-            <div className='hidden lg:block cursor-pointer'>
+            <div className='relative hidden lg:block cursor-pointer' onClick={() => handleOpenSidebar('wish-list')}>
               <img src={heartIcon} alt='heartIcon' />
+              <span className='absolute -top-[3px] -right-[8px] h-[16px] py-[4px] px-[5px] bg-primary text-white text-[11px] flex-center rounded-full'>
+                0
+              </span>
             </div>
-            <div className='relative cursor-pointer mr-3'>
+            <div className='relative cursor-pointer mr-3' onClick={() => handleOpenSidebar('cart')}>
               <img src={cartIcon} alt='cartIcon' />
-              <span className='absolute -top-[3px] -right-[11px] h-[18px] w-[18px] bg-primary text-white text-[11px] flex-center rounded-full'>
+              <span className='absolute -top-[3px] -right-[8px] h-[16px] py-[4px] px-[5px] bg-primary text-white text-[11px] flex-center rounded-full'>
                 0
               </span>
             </div>

@@ -8,7 +8,7 @@ const dataBoxIcon: BoxIconType[] = [
 ]
 
 const dataMenu: MenuItemType[] = [
-  { content: 'Elements', href: '#' },
+  { content: 'Elements' },
   { content: 'Our Shop', href: '/shop' },
   { content: 'About us', href: '/about-us' },
   { content: 'Contact', href: '/contact-us' },

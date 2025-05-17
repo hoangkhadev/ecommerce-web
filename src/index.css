@@ -12,6 +12,9 @@
   --color-four: #222;
   --color-white: #fff;
   --color-sub: #404040;
+  --z-index-header: 11;
+  --z-index-overlay: 10;
+  --z-index-sidebar: 11;
 }
 
 /* Theme */
@@ -32,6 +35,20 @@
   body {
     @apply font-roboto-mono;
   }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }
 }
 
 @layer components {
@@ -44,32 +61,38 @@
   }
 
   /* Begin Header */
-  .menu-item {
-    @apply relative py-[8px] cursor-pointer;
+  .header {
+    z-index: var(--z-index-header);
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      height: 3px;
-      width: 100%;
-      border-radius: 20px;
-      background-color: var(--color-primary);
+    .menu-item {
+      @apply relative py-[8px] cursor-pointer;
 
-      opacity: 0;
-      transform: scale(0);
-      transform-origin: right;
-    }
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        border-radius: 20px;
+        background-color: var(--color-primary);
 
-    &:hover::after {
-      opacity: 1;
-      transform: scale(1);
-      transition:
-        transform 300ms,
-        opacity 300ms;
+        opacity: 0;
+        transform: scale(0);
+        transform-origin: right;
+      }
+
+      &.active::after,
+      &:hover::after {
+        opacity: 1;
+        transform: scale(1);
+        transition:
+          transform 300ms,
+          opacity 300ms;
+      }
     }
   }
+
   /* End Header */
 
   /* Begin Banner */
@@ -81,8 +104,12 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+  .overlay-banner {
+    z-index: var(--z-index-banner);
+  }
   /* End Banner */
 
+  /* Begin Button */
   .btn {
     outline: none;
     font-size: 14px;
@@ -119,6 +146,7 @@
       color: var(--color-white);
     }
   }
+  /* End Button */
 
   .advanced-headline {
     display: flex;
@@ -179,7 +207,6 @@
     overflow-x: hidden;
   }
 
-  /* truck upper body */
   .truckBody {
     width: 130px;
     height: fit-content;
@@ -187,20 +214,6 @@
     animation: motion 1s linear infinite;
   }
 
-  /* truck suspension animation*/
-  @keyframes motion {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(3px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  /* truck's tires */
   .truckTires {
     width: 130px;
     height: fit-content;
@@ -258,6 +271,18 @@
     animation: roadAnimation 1.4s linear infinite;
   }
 
+  @keyframes motion {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
   @keyframes roadAnimation {
     0% {
       transform: translateX(0px);
@@ -267,4 +292,46 @@
     }
   }
   /* End Loading */
+
+  /* Begin Sidebar */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-index-overlay);
+    background-color: #0000004d;
+
+    transition: all 300ms ease;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: var(--color-white);
+    z-index: var(--z-index-sidebar);
+  }
+
+  .title-sidebar {
+    position: relative;
+    text-transform: uppercase;
+    font-size: 18px;
+    background-image: linear-gradient(90deg, currentcolor, currentcolor);
+    background-size: 0 2px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    width: fit-content;
+    margin: 0 auto;
+    transition:
+      all 0.3s linear,
+      background-position 0s;
+
+    &:hover {
+      background-size: 100% 2px;
+      background-position: left bottom;
+    }
+  }
+  /* End Sidebar */
 }

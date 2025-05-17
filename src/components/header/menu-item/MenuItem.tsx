@@ -1,15 +1,23 @@
-import MenuItemType from '@/types/menu-item'
-import { Link } from 'react-router'
+import { NavLink } from 'react-router'
+import { Dispatch, SetStateAction } from 'react'
 
-export default function MenuItem({ content, href = '/', isLink = true }: MenuItemType) {
+import MenuItemType from '@/types/menu-item'
+
+interface MenuItemProps extends MenuItemType {
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export default function MenuItem({ content, href = '/', isLink = true, setIsOpen }: MenuItemProps) {
   return (
     <>
       {isLink ? (
-        <Link className='menu-item' to={href}>
+        <NavLink className={({ isActive }) => `menu-item ${isActive ? 'active' : ''}`} to={href}>
           {content}
-        </Link>
+        </NavLink>
       ) : (
-        <div className='menu-item'>{content}</div>
+        <div className='menu-item after:hidden' onClick={() => setIsOpen(true)}>
+          {content}
+        </div>
       )}
     </>
   )
