@@ -16,4 +16,12 @@ const dataMenu: MenuItemType[] = [
   { content: 'Sign In', href: '/auth/login' },
 ]
 
-export { dataBoxIcon, dataMenu }
+const dataMenuMobile: MenuItemType[] = [
+  { content: 'Home', href: '/' },
+  { content: 'Elements' },
+  { content: 'Shop', href: '/shop' },
+  { content: 'About us', href: '/about-us' },
+  { content: 'Contact', href: '/contact-us' },
+]
+
+export { dataBoxIcon, dataMenu, dataMenuMobile }

@@ -20,14 +20,20 @@ export default function Sidebar() {
         return <WishList />
     }
   }
+
   return (
     <aside className='relative'>
-      <div className={isOpen ? 'overlay' : ''} onClick={handleClose} />
+      <div className={isOpen && type !== 'menu-mobile' ? 'overlay' : ''} onClick={handleClose} />
 
       <div
-        className={`sidebar max-w-[calc(100%-70px)] sm:max-w-[370px] transform transition-all duration-300 ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full md:translate-x-[370px] opacity-0'}`}
+        className={`sidebar right-0 max-w-[calc(100%-70px)] sm:max-w-[370px] transform transition-all duration-300 ease-in-out ${
+          isOpen && type !== 'menu-mobile'
+            ? 'translate-x-0 opacity-100'
+            : 'translate-x-full md:translate-x-[370px] opacity-0'
+        }
+      `}
       >
-        {isOpen && (
+        {isOpen && type !== 'menu-mobile' && (
           <div
             className='absolute w-[35px] h-[35px] flex-center bg-white hover:bg-[#ccc] rounded-full shadow cursor-pointer transition-colors duration-300 top-[20px] -left-[50px]'
             onClick={handleClose}

@@ -12,7 +12,7 @@ import { Link } from 'react-router'
 import useScrollHandling from '@/hooks/useScrollHandling'
 import { useEffect, useState } from 'react'
 import useSidebar from '@/hooks/useSidebar'
-import SidebarType from '@/types/sidebar'
+import { SidebarType } from '@/types/sidebar'
 
 export default function Header() {
   const { setIsOpen, setType } = useSidebar()
@@ -20,9 +20,8 @@ export default function Header() {
   const [fixedPostion, setFixedPosition] = useState(false)
 
   const handleOpenSidebar = (type: SidebarType) => {
-    setIsOpen(true)
     setType(type)
-    console.log('Click cart')
+    setIsOpen(true)
   }
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function Header() {
       <nav className='wrapper flex items-center justify-between py-[14px]'>
         {/* Header Left */}
         <div>
-          <div className='block lg:hidden cursor-pointer'>
+          <div className='block lg:hidden cursor-pointer' onClick={() => handleOpenSidebar('menu-mobile')}>
             <img src={menuIcon} alt='menuIcon' />
           </div>
           <div className='flex-center gap-[20px] hidden lg:flex'>
@@ -47,13 +46,7 @@ export default function Header() {
             </div>
             <div className='flex-center gap-[20px]'>
               {dataMenu.slice(0, 3).map((item, index) => (
-                <MenuItem
-                  key={`header-menu-item-left-${index}`}
-                  content={item.content}
-                  href={item.href}
-                  isLink={item.href !== undefined}
-                  setIsOpen={setIsOpen}
-                />
+                <MenuItem key={`header-menu-item-left-${index}`} content={item.content} href={item.href} />
               ))}
             </div>
           </div>
@@ -68,13 +61,7 @@ export default function Header() {
         <div className='flex-center gap-[20px]'>
           <div className='flex-center gap-[20px] hidden lg:flex'>
             {dataMenu.slice(3).map((item, index) => (
-              <MenuItem
-                key={`header-menu-item-right-${index}`}
-                content={item.content}
-                href={item.href}
-                isLink={item.href !== undefined}
-                setIsOpen={setIsOpen}
-              />
+              <MenuItem key={`header-menu-item-right-${index}`} content={item.content} href={item.href} />
             ))}
           </div>
 

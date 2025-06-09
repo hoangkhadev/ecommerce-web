@@ -1,20 +1,24 @@
 import Footer from '@/components/footer'
 import Header from '@/components/header'
+import MenuMobile from '@/components/header/menu-mobile'
 import Sidebar from '@/components/sidebar'
 
 import { Outlet } from 'react-router'
 
 export default function MainLayout() {
   return (
-    <div className='flex flex-col justify-between min-h-screen h-auto'>
-      <div className='relative'>
-        <Header />
-        <main className='pt-[82px]'>
-          <Outlet />
-        </main>
+    <>
+      <div className='flex flex-col justify-between min-h-screen'>
+        <div className='relative'>
+          <Header />
+          <main className='pt-[82px]'>
+            <Outlet />
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
       <Sidebar />
-    </div>
+      <MenuMobile />
+    </>
   )
 }

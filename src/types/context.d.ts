@@ -1,6 +1,5 @@
+import { SidebarType } from '@/types/sidebar'
 import { Dispatch, SetStateAction } from 'react'
-
-import SidebarType from '@/types/sidebar'
 
 export type SidebarContextType = {
   isOpen: boolean

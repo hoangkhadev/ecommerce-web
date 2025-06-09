@@ -1,5 +1,5 @@
 import heartIcon from '@/assets/icons/svgs/heartIcon.svg'
-import FooterSidebar from '@/components/sidebar/fotter-sidebar'
+import FooterSidebar from '@/components/sidebar/footer-sidebar'
 import HeaderSidebar from '@/components/sidebar/header-sidebar'
 import ProductItemSidebar from '@/components/sidebar/product-item-sidebar'
 

@@ -1,7 +1,7 @@
 import cartIcon from '@/assets/icons/svgs/cartIcon.svg'
 import HeaderSidebar from '@/components/sidebar/header-sidebar'
 import ProductItemSidebar from '@/components/sidebar/product-item-sidebar'
-import FooterSidebar from '@/components/sidebar/fotter-sidebar'
+import FooterSidebar from '@/components/sidebar/footer-sidebar'
 
 export default function Cart() {
   return (

@@ -1,7 +1,7 @@
 import reloadIcon from '@/assets/icons/svgs/reloadIcon.svg'
 import HeaderSidebar from '@/components/sidebar/header-sidebar'
 // import EmptySidebar from '@/components/sidebar/emtpy-sidebar'
-import FooterSidebar from '@/components/sidebar/fotter-sidebar'
+import FooterSidebar from '@/components/sidebar/footer-sidebar'
 import ProductItemSidebar from '@/components/sidebar/product-item-sidebar'
 
 export default function Compare() {

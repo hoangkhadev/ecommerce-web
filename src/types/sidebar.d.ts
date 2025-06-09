@@ -1,3 +1,1 @@
-type SidebarType = 'compare' | 'cart' | 'wish-list' | ''
-
-export default SidebarType
+export type SidebarType = 'compare' | 'cart' | 'wish-list' | 'menu-mobile' | ''
