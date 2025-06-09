@@ -1,5 +1,5 @@
 import Button from '@/components/button'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import logo from '@/assets/images/logo.webp'
 
