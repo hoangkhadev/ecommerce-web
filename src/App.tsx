@@ -6,13 +6,16 @@ import AppRoutes from '@/routes/app-routes'
 import Loading from '@/components/loading'
 
 import SidebarProvider from '@/providers/sidebar'
+import ToastProvider from '@/providers/toast'
 
 export default function App() {
   return (
-    <SidebarProvider>
-      <Suspense fallback={<Loading />}>
-        <RouterProvider router={AppRoutes} />
-      </Suspense>
-    </SidebarProvider>
+    <ToastProvider>
+      <SidebarProvider>
+        <Suspense fallback={<Loading />}>
+          <RouterProvider router={AppRoutes} />
+        </Suspense>
+      </SidebarProvider>
+    </ToastProvider>
   )
 }
