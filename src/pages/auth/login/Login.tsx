@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { isAxiosError } from 'axios'
-import { useNavigate } from 'react-router'
+import { Navigate, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import * as Yup from 'yup'
 import { FormikHelpers, useFormik } from 'formik'
-import Cookies from 'js-cookie'
 
 import eyeIcon from '@/assets/icons/svgs/eyeIcon.svg'
 import eyeCloseIcon from '@/assets/icons/svgs/eye-closed.svg'
 
 import Button from '@/components/button'
 import Input from '@/components/input'
-import { getInfo, login } from '@/api/auth.service'
+import useAuth from '@/hooks/useAuth'
+import { login } from '@/api/auth.service'
+import Cookies from 'js-cookie'
 
 interface LoginFormValues {
   username: string
@@ -22,6 +23,7 @@ interface LoginFormValues {
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const formik = useFormik<LoginFormValues>({
     initialValues: {
@@ -37,30 +39,30 @@ export default function Login() {
         setSubmitting(true)
         const { username, password } = values
         const res = await login({ username, password })
-        const { id, token, refreshToken } = res.data
+        if (res && res.status === 200) {
+          const { id, token, refreshToken } = res.data
 
-        localStorage.setItem('id', id)
-        Cookies.set('token', token)
-        Cookies.set('refreshToken', refreshToken)
+          Cookies.set('userId', id)
+          Cookies.set('token', token)
+          Cookies.set('refreshToken', refreshToken)
 
-        toast.success(res.data.message)
-      } catch (error: unknown) {
-        if (isAxiosError(error)) {
-          const message = error.response?.data?.message
-          toast.error(message)
-        } else {
-          toast.error('Something went wrong')
-          console.log(error)
+          toast.success('Login successfully')
+          window.location.replace('/')
         }
+        console.log(res)
+      } catch (error) {
+        if (isAxiosError(error)) {
+          const message = error?.response?.data?.message
+          toast.error(message)
+        }
+        console.error(error)
       } finally {
         setSubmitting(false)
       }
     },
   })
 
-  useEffect(() => {
-    getInfo()
-  }, [])
+  if (user) return <Navigate to={'/'} replace={true} />
 
   return (
     <div className='max-w-sm mx-auto py-10 wrapper'>

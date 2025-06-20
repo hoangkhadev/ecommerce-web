@@ -8,7 +8,7 @@ import BoxIcon from '@/components/header/box-icon'
 import MenuItem from '@/components/header/menu-item'
 
 import { dataBoxIcon, dataMenu } from '@/components/header/constants'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import useScrollHandling from '@/hooks/useScrollHandling'
 import { useEffect, useState } from 'react'
 import useSidebar from '@/hooks/useSidebar'
@@ -18,6 +18,7 @@ export default function Header() {
   const { setIsOpen, setType } = useSidebar()
   const { scrollPosition } = useScrollHandling()
   const [fixedPostion, setFixedPosition] = useState(false)
+  const navigate = useNavigate()
 
   const handleOpenSidebar = (type: SidebarType) => {
     setType(type)
@@ -60,9 +61,19 @@ export default function Header() {
         {/* Header Right */}
         <div className='flex-center gap-[20px]'>
           <div className='flex-center gap-[20px] hidden lg:flex'>
-            {dataMenu.slice(3).map((item, index) => (
-              <MenuItem key={`header-menu-item-right-${index}`} content={item.content} href={item.href} />
-            ))}
+            {dataMenu
+              .slice(3)
+              .map((item, index) =>
+                item.content === 'Sign In' ? (
+                  <MenuItem
+                    key={`header-menu-item-right-${index}`}
+                    content={item.content}
+                    onClick={() => navigate(`${item.href}`)}
+                  />
+                ) : (
+                  <MenuItem key={`header-menu-item-right-${index}`} content={item.content} href={item.href} />
+                )
+              )}
           </div>
 
           <div className='flex-center gap-[20px]'>

@@ -13,8 +13,7 @@ const login = async (body: AuthType) => {
   return await axiosClient.post('/login', body)
 }
 
-const getInfo = async () => {
-  const id = localStorage.getItem('id')
+const getInfo = async (id: string) => {
   return await axiosClient.get(`/user/info/${id}`)
 }
 

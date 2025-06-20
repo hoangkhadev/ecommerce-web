@@ -7,15 +7,18 @@ import Loading from '@/components/loading'
 
 import SidebarProvider from '@/providers/sidebar'
 import ToastProvider from '@/providers/toast'
+import AuthProvider from '@/providers/auth'
 
 export default function App() {
   return (
     <ToastProvider>
-      <SidebarProvider>
-        <Suspense fallback={<Loading />}>
-          <RouterProvider router={AppRoutes} />
-        </Suspense>
-      </SidebarProvider>
+      <AuthProvider>
+        <SidebarProvider>
+          <Suspense fallback={<Loading />}>
+            <RouterProvider router={AppRoutes} />
+          </Suspense>
+        </SidebarProvider>
+      </AuthProvider>
     </ToastProvider>
   )
 }

@@ -8,10 +8,11 @@ import eyeCloseIcon from '@/assets/icons/svgs/eye-closed.svg'
 
 import Button from '@/components/button'
 import Input from '@/components/input'
-import { useNavigate } from 'react-router'
+import { Navigate, useNavigate } from 'react-router'
 import { register } from '@/api/auth.service'
 import { toast } from 'react-toastify'
 import { isAxiosError } from 'axios'
+import useAuth from '@/hooks/useAuth'
 
 interface RegisterValues {
   username: string
@@ -22,6 +23,7 @@ interface RegisterValues {
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const { user } = useAuth()
 
   const navigate = useNavigate()
 
@@ -51,15 +53,14 @@ export default function Register() {
         if (isAxiosError(error)) {
           const message = error.response?.data?.message
           toast.error(message)
-        } else {
-          toast.error('Something went wrong')
-          console.log(error)
         }
+        console.log(error)
       } finally {
         setSubmitting(false)
       }
     },
   })
+  if (user) return <Navigate to={'/'} replace={true} />
 
   return (
     <div className='max-w-sm mx-auto py-10 wrapper'>

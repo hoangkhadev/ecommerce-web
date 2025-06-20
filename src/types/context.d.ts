@@ -1,4 +1,5 @@
 import { SidebarType } from '@/types/sidebar'
+import { UserType } from '@/types/user'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'react-toastify'
 
@@ -11,4 +12,9 @@ export type SidebarContextType = {
 
 export type ToastContextType = {
   toast: typeof toast
+}
+
+export type AuthContextType = {
+  user: UserType | null
+  handleLogout: () => void
 }
