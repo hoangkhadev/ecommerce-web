@@ -4,7 +4,7 @@ export default function Input({ className, ...props }: InputHTMLAttributes<HTMLI
   return (
     <input
       {...props}
-      className={`outline-none px-[15px] text-[14px] min-h-[35px] w-full placeholder:font-medium ${className}`}
+      className={`outline-none border rounded-sm px-[15px] text-[14px] min-h-[35px] w-full placeholder:font-medium ${className}`}
     />
   )
 }

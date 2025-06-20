@@ -8,9 +8,12 @@ import arrowRight from '@/assets/icons/svgs/chevronRightIcon.svg'
 import Input from '@/components/input'
 import { dataMenuMobile } from '@/components/header/constants'
 import MenuItem from '@/components/header/menu-item'
+import FooterSidebar from '@/components/sidebar/footer-sidebar'
+import { useNavigate } from 'react-router'
 
 export default function MenuMobile() {
   const { isOpen, setIsOpen, type } = useSidebar()
+  const navigate = useNavigate()
 
   const handleClose = () => setIsOpen(false)
 
@@ -45,7 +48,7 @@ export default function MenuMobile() {
                   htmlFor='search-mobile'
                   className='flex-center border border-gray-300 focus-within:border-primary transition'
                 >
-                  <Input placeholder='Search for products.' id='search-mobile' />
+                  <Input placeholder='Search for products.' id='search-mobile' className='border-none' />
                   <div className='h-[35px] min-w-[35px] max-w-[35px] max-h-[35px] flex-center'>
                     <img src={searchIcon} alt='search icon' />
                   </div>
@@ -53,7 +56,7 @@ export default function MenuMobile() {
               </form>
               <ul className='flex flex-wrap'>
                 {dataMenuMobile.map((item, index) => (
-                  <li className='w-full text-[14px] py-[9px] flex-center justify-between'>
+                  <li onClick={handleClose} className='w-full text-[14px] py-[9px] flex-center justify-between'>
                     <MenuItem
                       key={`meu-mobile-${index}`}
                       content={item.content}
@@ -69,14 +72,18 @@ export default function MenuMobile() {
             </div>
           </div>
 
-          {/* <FooterSidebar
-            isCart
-            subTotal={99.99}
-            title1='View cart'
-            title2='Checkout'
-            onClick1={() => {}}
-            onClick2={() => {}}
-          /> */}
+          <FooterSidebar
+            title1='Sign in'
+            title2='Sign up'
+            onClick1={() => {
+              handleClose()
+              navigate('auth/login')
+            }}
+            onClick2={() => {
+              handleClose()
+              navigate('auth/register')
+            }}
+          />
         </div>
       </div>
     </aside>
