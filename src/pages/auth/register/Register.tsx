@@ -9,10 +9,12 @@ import eyeCloseIcon from '@/assets/icons/svgs/eye-closed.svg'
 import Button from '@/components/button'
 import Input from '@/components/input'
 import { useNavigate } from 'react-router'
+import { register } from '@/api/auth.service'
+import { toast } from 'react-toastify'
+import { isAxiosError } from 'axios'
 
 interface RegisterValues {
-  name: string
-  email: string
+  username: string
   password: string
   confirm_password: string
 }
@@ -25,27 +27,34 @@ export default function Register() {
 
   const formik = useFormik<RegisterValues>({
     initialValues: {
-      name: '',
-      email: '',
+      username: '',
       password: '',
       confirm_password: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().min(2, 'Name must be least 2 characters').required('Name is required'),
-      email: Yup.string().email('Invalid email address').required('Email is requried'),
-      password: Yup.string().min(8, 'Password must be least 8 characters').required('Password is requried'),
+      username: Yup.string().min(2, 'Username must be least 2 characters').required('Username is required'),
+
+      password: Yup.string().min(6, 'Password must be least 6 characters').required('Password is requried'),
       confirm_password: Yup.string()
-        .min(8, 'Confirm password must be least 8 characters')
+        .min(6, 'Confirm password must be least 6 characters')
         .oneOf([Yup.ref('password')], 'The confirm password does not match the password.')
         .required('Confirm password is requried'),
     }),
     onSubmit: async (values: RegisterValues, { setSubmitting }: FormikHelpers<RegisterValues>) => {
       try {
         setSubmitting(true)
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        console.log('Submit', values)
-      } catch (error) {
-        console.log(error)
+        const { username, password } = values
+        const res = await register({ username, password })
+        toast.success(res.data.message)
+        navigate('/auth/login', { replace: true })
+      } catch (error: unknown) {
+        if (isAxiosError(error)) {
+          const message = error.response?.data?.message
+          toast.error(message)
+        } else {
+          toast.error('Something went wrong')
+          console.log(error)
+        }
       } finally {
         setSubmitting(false)
       }
@@ -57,41 +66,22 @@ export default function Register() {
       {formik.isSubmitting && <div className='overlay' />}
       <h1 className='font-medium text-center mb-4 text-xl sm:text-2xl text-[#333]'>SIGN UP</h1>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor='name' className='block mb-2'>
+        <label htmlFor='username' className='block mb-2'>
           <p className='text-sm font-normal mb-[2px]'>
-            Name <span>*</span>
+            Username <span>*</span>
           </p>
           <Input
             type='text'
-            id='name'
-            name='name'
+            id='username'
+            name='username'
             className='h-[40px]'
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            value={formik.values.name}
+            value={formik.values.username}
             disabled={formik.isSubmitting}
           />
-          {formik.errors.name && formik.touched.name && (
-            <p className='text-xs mt-[1px] text-rose-500'>{formik.errors.name}</p>
-          )}
-        </label>
-
-        <label htmlFor='email' className='block mb-2'>
-          <p className='text-sm font-normal mb-[2px]'>
-            Email <span>*</span>
-          </p>
-          <Input
-            type='text'
-            id='email'
-            name='email'
-            className='h-[40px]'
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            disabled={formik.isSubmitting}
-          />
-          {formik.errors.email && formik.touched.email && (
-            <p className='text-xs mt-[1px] text-rose-500'>{formik.errors.email}</p>
+          {formik.errors.username && formik.touched.username && (
+            <p className='text-xs mt-[1px] text-rose-500'>{formik.errors.username}</p>
           )}
         </label>
 

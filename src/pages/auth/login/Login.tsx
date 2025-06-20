@@ -1,17 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { isAxiosError } from 'axios'
+import { useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
 
-import { FormikHelpers, useFormik } from 'formik'
 import * as Yup from 'yup'
+import { FormikHelpers, useFormik } from 'formik'
+import Cookies from 'js-cookie'
 
 import eyeIcon from '@/assets/icons/svgs/eyeIcon.svg'
 import eyeCloseIcon from '@/assets/icons/svgs/eye-closed.svg'
 
 import Button from '@/components/button'
 import Input from '@/components/input'
-import { useNavigate } from 'react-router'
+import { getInfo, login } from '@/api/auth.service'
 
 interface LoginFormValues {
-  email: string
+  username: string
   password: string
 }
 
@@ -21,47 +25,64 @@ export default function Login() {
 
   const formik = useFormik<LoginFormValues>({
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Email is requried'),
-      password: Yup.string().min(8, 'Password must be least 8 characters').required('Password is requried'),
+      username: Yup.string().min(2, 'Username must be least 2 characters').required('Username is requried'),
+      password: Yup.string().min(6, 'Password must be least 6 characters').required('Password is requried'),
     }),
     onSubmit: async (values: LoginFormValues, { setSubmitting }: FormikHelpers<LoginFormValues>) => {
       try {
         setSubmitting(true)
-        await new Promise((resolve) => setTimeout(resolve, 3000))
-        console.log('Submit', values)
-      } catch (error) {
-        console.log(error)
+        const { username, password } = values
+        const res = await login({ username, password })
+        const { id, token, refreshToken } = res.data
+
+        localStorage.setItem('id', id)
+        Cookies.set('token', token)
+        Cookies.set('refreshToken', refreshToken)
+
+        toast.success(res.data.message)
+      } catch (error: unknown) {
+        if (isAxiosError(error)) {
+          const message = error.response?.data?.message
+          toast.error(message)
+        } else {
+          toast.error('Something went wrong')
+          console.log(error)
+        }
       } finally {
         setSubmitting(false)
       }
     },
   })
 
+  useEffect(() => {
+    getInfo()
+  }, [])
+
   return (
     <div className='max-w-sm mx-auto py-10 wrapper'>
       {formik.isSubmitting && <div className='overlay' />}
       <h1 className='font-medium text-center mb-4 text-xl sm:text-2xl text-[#333]'>SIGN IN</h1>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor='email' className='block mb-2'>
+        <label htmlFor='username' className='block mb-2'>
           <p className='text-sm font-normal mb-[2px]'>
-            Email <span>*</span>
+            Username <span>*</span>
           </p>
           <Input
             type='text'
-            id='email'
-            name='email'
+            id='username'
+            name='username'
             className='h-[40px]'
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            value={formik.values.email}
+            value={formik.values.username}
             disabled={formik.isSubmitting}
           />
-          {formik.errors.email && formik.touched.email && (
-            <p className='text-xs mt-[1px] text-rose-500'>{formik.errors.email}</p>
+          {formik.errors.username && formik.touched.username && (
+            <p className='text-xs mt-[1px] text-rose-500'>{formik.errors.username}</p>
           )}
         </label>
 
