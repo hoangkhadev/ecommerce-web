@@ -4,14 +4,20 @@ import AdvancedHeadline from '@/components/advanced-headline'
 import HeadingListProducts from '@/components/home/heading-list-products'
 import SaleHomePage from '@/components/home/sale-home-page'
 import { useEffect, useState } from 'react'
-import { getProducts } from '@/api/product.service'
+import { getProducts, ProductQueryType } from '@/api/product.service'
 
 export default function Home() {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
     const getProduct = async () => {
-      const res = await getProducts()
+      const query: ProductQueryType = {
+        sortType: '0',
+        page: 1,
+        limit: '10',
+      }
+      const res = await getProducts(query)
+
       if (res && res.contents) {
         setProducts(res.contents)
       }

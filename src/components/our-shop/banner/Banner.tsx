@@ -1,12 +1,12 @@
 import Button from '@/components/button'
 import CountdownTimer from '@/components/countdown-timer'
 
-export default function CountdownBanner() {
-  const targetDate = '2025-12-15T00:00:00'
+export default function Banner() {
+  const targetDate = '2026-06-22:00:00:00'
 
   return (
-    <div className='countdown-banner'>
-      <div className='flex-center h-full flex-col'>
+    <section className='our-shop-banner h-[380px] sm:h-[250px] mb-6'>
+      <div className='flex-center flex-col pt-[50px]'>
         <div className='mb-[20px] flex-center flex-wrap'>
           <CountdownTimer targetDate={targetDate} />
         </div>
@@ -17,6 +17,6 @@ export default function CountdownBanner() {
           Buy now
         </Button>
       </div>
-    </div>
+    </section>
   )
 }

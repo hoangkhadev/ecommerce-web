@@ -1,5 +1,6 @@
 type SizeType = {
-  [key: string]: string
+  name: string
+  amount: string
 }
 export default interface ProductType {
   _id: string

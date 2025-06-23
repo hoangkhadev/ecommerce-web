@@ -339,6 +339,13 @@
   /* End Sidebar */
 }
 
+/* Our shop */
+.our-shop-banner {
+  background-image: url('./assets/images/banner-our-shop.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 @media (width <= 320px) {
   .sidebar {
     max-width: calc(100% - 50px);
